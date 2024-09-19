@@ -11,6 +11,7 @@ public class ShopRepository {
         tmp[tmp.length - 1] = product;
         return tmp;
     }
+
     public void add(Product product) {
         if (findById(product.getId()) != null) {
             throw new AlreadyExistsException("Product with id " + product.getId() + " already exists");
@@ -23,23 +24,20 @@ public class ShopRepository {
     }
 
     public void remove(int id) {
+        Product removingProduct = findById(id);
+        if (removingProduct == null) {
+            throw new NotFoundException(id);
+        }
+
         Product[] tmp = new Product[products.length - 1];
         int copyToIndex = 0;
-        for (Product product : products) {
-            if (product.getId() != id) {
-                tmp[copyToIndex] = product;
+        for (Product p : products) {
+            if (p.getId() != id) {
+                tmp[copyToIndex] = p;
                 copyToIndex++;
             }
         }
         products = tmp;
-    }
-
-    public void removeById(int id) {
-        Product product = findById(id);
-        if (product == null) {
-            throw new NotFoundException("Product with id " + id + " not found"); // Добавлен пробел перед "not"
-        }
-        remove(id);
     }
 
     public Product findById(int id) {
@@ -51,3 +49,4 @@ public class ShopRepository {
         return null;
     }
 }
+

@@ -6,8 +6,7 @@ public class Main {
         ShopRepository repo = new ShopRepository();
 
         try {
-            repo.removeById(-100);
-            //System.out.println("Hello!");
+            repo.remove(-100);
         } catch (NegativeArraySizeException e) {
             System.out.println("Ошибка");
         }
